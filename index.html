@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Voting</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#020617;
+  color:#e5e7eb;
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:16px;
+}
+
+h1{
+  font-size:1.2rem;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.card{
+  background:#0f172a;
+  border-radius:12px;
+  padding:14px;
+}
+
+.card h2{
+  font-size:.9rem;
+  margin:0 0 8px;
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+input,select,button{
+  width:30%;
+  padding:8px 10px;
+  font-size:.85rem;
+  border-radius:8px;
+  border:none;
+}
+
+select,input{margin-bottom:8px}
+
+button{
+  background:#38bdf8;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.cand{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#020617;
+  padding:8px 10px;
+  border-radius:8px;
+  margin-bottom:6px;
+}
+
+a{
+  color: yellow;
+  text-decoration: none;
+}
+
+.cand span{font-size:.8rem}
+
+footer{
+  text-align:center;
+  font-size:.7rem;
+  opacity:.6;
+  margin-top:10px;
+}
+
+@media(max-width:700px){
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1><i class="fas fa-school"></i> School Voting</h1>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2><i class="fas fa-vote-yea"></i> Vote</h2>
+      <input id="voter" placeholder="Student ID">
+      <select id="position">
+        <option value="1">Head Boy</option>
+        <option value="2">Head Girl</option>
+        <option value="3">Prefect</option>
+      </select>
+
+      <div class="cand"><span>A</span><button onclick="vote(1)">Vote</button></div>
+      <div class="cand"><span>B</span><button onclick="vote(2)">Vote</button></div>
+      <div class="cand"><span>C</span><button onclick="vote(3)">Vote</button></div>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-chart-bar"></i> Results</h2>
+      <canvas id="chart" height="180"></canvas>
+    </div>
+
+  </div>
+
+  <footer>© School Election. Designed by <a href="https://a-finder.vercel.app">McOwino</footer>
+</div>
+
+<script>
+const API="PASTE_YOUR_WEB_APP_URL_HERE";
+let lock=false;
+
+function vote(id){
+  if(lock) return;
+  const voter=voterEl().value.trim();
+  const poll=positionEl().value;
+  if(!voter) return alert('Enter ID');
+  lock=true;
+
+  fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'vote',poll_id:poll,candidate_id:id,voter_id:voter})})
+  .then(r=>r.json()).then(d=>alert(d.message)).finally(()=>lock=false);
+}
+
+const voterEl=()=>document.getElementById('voter');
+const positionEl=()=>document.getElementById('position');
+
+let chart;
+function load(){
+  fetch(API+`?action=results&poll_id=${positionEl().value}`)
+  .then(r=>r.json())
+  .then(d=>{
+    if(chart) chart.destroy();
+    chart=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:d.map(x=>x.name),datasets:[{data:d.map(x=>x.votes)}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+  });
+}
+
+setInterval(load,3000);load();
+</script>
+
+</body>
+</html>
