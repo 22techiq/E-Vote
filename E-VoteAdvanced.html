@@ -677,6 +677,28 @@ document.onmousedown = function (e) {
   if (e.button === 2) return false;
 };
 </script>
+<script>
+(async () => {
+  const token = new URLSearchParams(window.location.search).get("token");
+
+  if (!token) {
+    window.location.replace("pageA.html");
+    return;
+  }
+
+  const res = await fetch(
+    "https://script.google.com/macros/s/AKfycbzG36UvSnkldPrLqPUCsu72XXkou0hd2cDqcBP_2TUF6EiFR18YODAA97ber48gdTDB/exec?action=verify&token=" + token
+  );
+
+  const result = await res.text();
+
+  if (result === "OK") {
+    document.getElementById("content").style.display = "block";
+  } else {
+    window.location.replace("pageA.html");
+  }
+})();
+</script>
 
 </body>
 </html>
