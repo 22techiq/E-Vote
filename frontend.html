@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LakeBrand University | Online Voting</title>
+<!-- Prevent iframe embedding -->
+<meta http-equiv="X-Frame-Options" content="DENY">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+  --primary:#0f3c78;
+  --accent:#c9a227;
+  --bg:#f8fafc;
+  --text:#0f172a;
+  --muted:#475569;
+  --border:#e5e7eb;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(circle at top right,#e0ecff,transparent 40%),
+    radial-gradient(circle at bottom left,#fff5cc,transparent 40%),
+    var(--bg);
+  color:var(--text);
+}
+
+/* NAV */
+nav{
+  max-width:1200px;
+  margin:auto;
+  padding:22px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand img{
+  height:42px;
+}
+
+.brand h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.25rem;
+  font-weight:700;
+}
+
+.brand h1 span{
+  color:var(--primary);
+}
+
+nav a{
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:500;
+}
+
+/* HERO */
+.hero{
+  max-width:1200px;
+  margin:90px auto;
+  padding:0 20px;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+
+.hero h2{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2.8rem;
+  line-height:1.15;
+}
+
+.hero h2 span{
+  color:var(--primary);
+}
+
+.hero p{
+  margin-top:22px;
+  max-width:560px;
+  color:var(--muted);
+}
+
+.actions{
+  margin-top:36px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:14px 36px;
+  border-radius:10px;
+  border:none;
+  font-size:.95rem;
+  cursor:pointer;
+  font-weight:500;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),#092a54);
+  color:#fff;
+}
+
+.btn-outline{
+  background:#fff;
+  border:1px solid var(--border);
+}
+
+/* INFO */
+.info{
+  background:rgba(255,255,255,.75);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:34px;
+  backdrop-filter:blur(14px);
+}
+
+.info-item{
+  display:flex;
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.info-item:last-child{margin-bottom:0}
+
+.info-item i{
+  color:var(--accent);
+  font-size:1.3rem;
+}
+
+.info-item h4{
+  font-size:.95rem;
+  font-weight:600;
+}
+
+.info-item p{
+  font-size:.85rem;
+  color:var(--muted);
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px 20px;
+  font-size:.8rem;
+  color:#64748b;
+  border-top:1px solid var(--border);
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero h2{font-size:2.1rem}
+}
+a{
+  color: yellowgreen;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="brand">
+    <!-- Replace with institution logo -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Coat_of_arms_placeholder.svg" alt="University Logo">
+    <h1>LakeBrand <span>University</span></h1>
+  </div>
+  <a href="#">Admin Login</a>
+</nav>
+<hr>
+<hr>
+<section class="hero">
+  <div class="hero-grid">
+
+    <div>
+      <h2>Official Student<br><span>Online Voting</span></h2>
+
+      <p>
+        This platform enables LakeBrand University students to participate in
+        secure, transparent, and time-bound institutional elections.
+      </p>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="go()">Proceed to Vote</button>
+        <button class="btn btn-outline">View Notice</button>
+      </div>
+    </div>
+
+    <div class="info">
+      <div class="info-item">
+        <i class="fa-solid fa-user-check"></i>
+        <div>
+          <h4>Authorized Voters Only</h4>
+          <p>Access restricted to registered students.</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+          <h4>Election Timetable</h4>
+          <p>Voting opens and closes automatically.</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <i class="fa-solid fa-lock"></i>
+        <div>
+          <h4>Secure Vote Storage</h4>
+          <p>All votes are encrypted and protected.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!--ENABLES TOKENIZED ACCESS VIA BACKEND APPSCRIPT:FOR ENHANCED SECURITY-->
+<script>
+async function go() {
+  const res = await fetch(
+    "https://script.google.com/macros/s/AKfycbzG36UvSnkldPrLqPUCsu72XXkou0hd2cDqcBP_2TUF6EiFR18YODAA97ber48gdTDB/exec?action=issue"
+  );
+  const token = await res.text();
+
+  window.location.href =
+    "https://e-vote-ruddy.vercel.app/E-VoteAdvanced.html?token=" + token;
+}
+</script>
+
+<script>
+/* =================================
+   1. Disable Right Click
+================================= */
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+/* =================================
+   2. Disable Copy / Cut / Paste
+================================= */
+["copy", "cut", "paste", "dragstart"].forEach(evt => {
+  document.addEventListener(evt, e => e.preventDefault());
+});
+
+/* =================================
+   3. Block DevTools Shortcuts
+================================= */
+document.addEventListener("keydown", function (e) {
+  if (
+    e.key === "F12" ||
+    (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key)) ||
+    (e.ctrlKey && e.key === "U")
+  ) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+/* =================================
+   4. DevTools Size Detection
+================================= */
+setInterval(() => {
+  const widthDiff  = window.outerWidth - window.innerWidth;
+  const heightDiff = window.outerHeight - window.innerHeight;
+
+  if (widthDiff > 160 || heightDiff > 160) {
+    document.body.innerHTML =
+      "<h2 style='color:red;margin-top:20%'>Access Denied</h2>";
+  }
+}, 1000);
+
+/* =================================
+   5. Console Open Detection
+================================= */
+(function () {
+  const element = new Image();
+  Object.defineProperty(element, "id", {
+    get: function () {
+      document.body.innerHTML =
+        "<h2 style='color:red;margin-top:20%'>Inspection Blocked</h2>";
+    }
+  });
+  console.log(element);
+})();
+
+/* =================================
+   6. Anti-Debugger Trap
+================================= */
+setInterval(function () {
+  debugger;
+}, 2000);
+
+/* =================================
+   7. Hide Source via Visibility Change
+================================= */
+document.addEventListener("visibilitychange", function () {
+  if (document.hidden) {
+    document.body.style.display = "none";
+  } else {
+    document.body.style.display = "block";
+  }
+});
+
+/* =================================
+   8. Disable View Source via Mouse
+================================= */
+document.onmousedown = function (e) {
+  if (e.button === 2) return false;
+};
+</script>
+
+
+<footer>
+  © 2026 LakeBrand University • Designed by <a href="https://a-finder.vercel.app">McOwino</a>
+</footer>
+
+</body>
+</html>
