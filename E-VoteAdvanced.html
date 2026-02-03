@@ -678,13 +678,13 @@ document.onmousedown = function (e) {
 };
 </script>
 
-<!--Tokenize the page on landing page-->
+<!--Tokenize the page on landing page(This Page A)-->
 <script>
 (async () => {
   const token = new URLSearchParams(window.location.search).get("token");
 
   if (!token) {
-    window.location.replace("pageA.html");
+    window.location.replace("frontend.html");
     return;
   }
 
